@@ -1,0 +1,21 @@
+# Refreshes the "Recent writing" list in README.md from the website's RSS feed.
+name: Update recent writing
+
+on:
+  schedule:
+    - cron: "0 18 * * *" # daily, 6-7am Auckland time
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: gautamkrishnar/blog-post-workflow@v1
+        with:
+          feed_list: "https://foxnz.github.io/rss.xml"
+          max_post_count: 5
+          commit_message: "Update recent writing"
